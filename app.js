@@ -118,6 +118,20 @@ var UIController = (function() {
         },
         getDOMStrings: function() {
             return DOMStrings;
+        },
+        clearFields: function() {
+            var fields, fieldsArray;
+
+            fields = document.querySelectorAll(this.getDOMStrings().inputDescription + ',' +
+                this.getDOMStrings().inputValue);
+
+            fieldsArray = Array.prototype.slice.call(fields);
+            /* Es mejor usar Arrays que listas porque las primeras tienen funcionalidades que nos
+            facilitan la vida , por eso usamos el prototipo del Array en lugar de fields.slice() */
+            fieldsArray.forEach((currentElement, index, fullArray) => {
+                currentElement.value = '';
+            });
+            fieldsArray[0].focus();
         }
     };
 })();
@@ -152,9 +166,12 @@ var controller = (function(budgetCtrl, UIctrl) {
         // 3. Add the new item to the UI
         UIController.addListItem(newItem, input.type);
 
-        // 4. Calculate de budget
+        // 4. Clear the fields
+        UIctrl.clearFields();
 
-        // 5. Display the budget on the UI
+        // 5. Calculate de budget
+
+        // 6. Display the budget on the UI
     };
 
     return {
