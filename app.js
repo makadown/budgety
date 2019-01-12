@@ -178,6 +178,12 @@ var UIController = (function() {
         getDOMStrings: function() {
             return DOMStrings;
         },
+        deleteListItem: function(selectorId) {
+            var el = document.getElementById(selectorId);
+            /* To remove child.
+                check this reference: https://blog.garstasio.com/you-dont-need-jquery/dom-manipulation/ */
+            el.parentNode.removeChild(el);
+        },
         clearFields: function() {
             var fields, fieldsArray;
 
@@ -276,8 +282,10 @@ var controller = (function(budgetCtrl, UIctrl) {
             budgetCtrl.deleteItem(type,id);
 
             // 2. delete item from user interface
+            UIController.deleteListItem(itemID);
 
             // 3. update and show new budget
+            updateBudget();
         }
     };
 
