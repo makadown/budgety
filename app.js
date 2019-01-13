@@ -151,7 +151,8 @@ var UIController = (function() {
         expenseLabel: '.budget__expenses--value',
         percentageLabel: '.budget__expenses--percentage',
         container: '.container',
-        expensesPercLabel : '.item__percentage'
+        expensesPercLabel : '.item__percentage',
+        dateLabel: '.budget__title--month'
     };
     
     var formatNumber = function (num, type) {
@@ -296,6 +297,21 @@ var UIController = (function() {
 
         },
 
+        displayMonth: function() {
+            // One line solution:
+            document.querySelector(DOMStrings.dateLabel).textContent = 
+                new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }); 
+
+           /* // Custom solution, if you want to add a comma before the year...
+           var now, month, year;
+           now = new Date();
+           months = ['Jan', 'Feb', 'Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+           month = now.getMonth();
+           year = now.getFullYear();
+           document.querySelector(DOMStrings.dateLabel).textContent = months[month] + ', ' + year;
+           */
+        },
+
         getDOMStrings: function() {
             return DOMStrings;
         }
@@ -389,12 +405,13 @@ var controller = (function(budgetCtrl, UIctrl) {
     return {
         init: function() {
             console.log('Application has started.');
+            UIctrl.displayMonth();
             UIctrl.displayBudget({
                 budget: 0,
                 totalInc: 0,
                 totalExp: 0,
                 percentage: -1
-            });
+            });            
             setupEventListeners();
         }
     };
